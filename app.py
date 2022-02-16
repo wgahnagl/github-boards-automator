@@ -15,6 +15,7 @@ def events():
     json_data = request.get_json()
     print(json_data)
     return jsonify({'message': 'success'}), 200
+h
 
 if __name__ == "__main__":
     app.run()
