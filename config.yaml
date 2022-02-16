@@ -1,0 +1,15 @@
+- board: "node prs"
+  # Add stuff to board
+  query: "is:open label:sig/node is:pr -label:kind/flake -label:kind/failing-test"
+  # Move stuff on board automatically
+  columns:
+  - name: "triage"
+    labels:
+    - "needs-ok-to-test"
+    - "needs-triage"
+    - "needs-priority"
+  - name: "waiting on author"
+    labels:
+    - "do-not-merge/..."
+- board: "node bugs"
+  query: "is:open is:issue label:kind/bug"

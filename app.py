@@ -1,22 +1,19 @@
-# app.py
+import yaml
+import requests 
 
-from flask import Flask, request, jsonify
+def main():
+    with open("config.yaml", "r") as file: 
+        config = yaml.safe_load(file)[0]
+        print(config["query"].split()) 
+        query = []
+        for item in config["query"].split(): 
+            item = item.replace(":", "%3A")
+            item = item.replace("/", "%2F")
+            query.append(item)
+        query = "+".join(query)
+        print(query)
+        board_name = config["columns"][0]["name"]
+        request = requests.get('https://github.com/orgs/kubernetes/projects/49/search_results?'+ board_name +'=show&q='+ query)
+        print(request.content)
 
-app = Flask(__name__)
-
-GITHUB_INSTALL_URL = "https://github.com/apps/benthic-automation-test/installations/new"
-
-@app.route('/')
-def index():
-    return f"<h1>Github Apps with Flask</h1></br> <a href='{GITHUB_INSTALL_URL}'>Install app</a>"
-
-@app.route('/git-providers/1/events/', methods=['POST'])
-def events():
-    json_data = request.get_json()
-    print(json_data)
-    return jsonify({'message': 'success'}), 200
-h
-
-if __name__ == "__main__":
-    app.run()
-
+main()
